@@ -4,13 +4,13 @@
     import { page } from "$lib/stores/page";
  </script>
 
-<section id="about" transition:fade={{ duration: 250 }}>
+<section id="certifications" transition:fade={{ duration: 250 }}>
 
 </section>
 
 <aside class="sidebar">
     <div class="title">
-		<p>about</p>
+		<p>certifications</p>
 	</div>
 	<div class="triangle" />
 	<div class="square">
@@ -28,7 +28,7 @@
 <style lang="scss">
     @use "src/lib/styles/container.scss" as *;
 
-    #about {
+    #certifications {
         overflow: 200vh;
         background-color: #7c7c7c;
     }

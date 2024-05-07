@@ -56,7 +56,6 @@
         top: 0.3rem;
         left: 0.1rem;
         margin: 0;
-        word-break: break-all;
         color: #97bc4a;
         font: {
             family: "Ubuntu Mono";

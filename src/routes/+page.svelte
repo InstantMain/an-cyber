@@ -1,16 +1,30 @@
 <script lang="ts">
     import Home from "$lib/pages/Home.svelte";
     import About from "$lib/pages/About.svelte";
+	import Certifications from "$lib/pages/Certifications.svelte";
 
-    let page = "home";
+    import { page } from "$lib/stores/page";
+
     let shouldAnimate = true;
 </script>
 
+<svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</svelte:head>
+
 <main>
-    {#if page == "home"}
-        <Home bind:page bind:shouldAnimate/>
-    {:else if page == "about"}
-        <About bind:page/>
+    {#if $page == "home"}
+        <Home bind:shouldAnimate />
+    {:else if $page == "about"}
+        <About />
+    {:else if $page == "certifications"}
+        <Certifications />
     {/if}
 </main>
 
@@ -22,6 +36,5 @@
         inset: 0;
         width: 100%;
         height: 100vh;
-        overflow: hidden;
     }
 </style>

@@ -1,13 +1,18 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { slide } from 'svelte/transition';
     import { quadOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
 
+	import { banners } from "$lib/assets/banners";
+    import { page } from "$lib/stores/page";
     import CommandLine from "$lib/components/CommandLine.svelte";
-	import { banners } from "$lib/assets/banners.svelte";
 
-    export let page: string;
-    export let shouldAnimate: boolean;
+    export let shouldAnimate = true;
+
+    const links = [
+        { page: "about", hash: "About.svelte#about" },
+        { page: "certifications", hash: "Certifications.svelte#certifications" }
+    ]
 
     let isMounted = false;
     let hasStartedTyping = false;
@@ -18,12 +23,6 @@
         isMounted = true;
     })
 </script>
-
-<svelte:head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
-</svelte:head>
 
 <section id="home" transition:slide={{ duration: 250, easing: quadOut, axis: "x" }}>
     <div class="terminal">
@@ -41,10 +40,12 @@
                 <CommandLine text="tree" animated={shouldAnimate} bind:completed={hasTypedLs}/>
             {/if}
             {#if hasTypedLs}
-                <a
-                    on:click|preventDefault={() => {page = "about"; shouldAnimate = false}}
-                    href="/src/pages/About.svelte#about"
-                >├── about</a>
+                {#each links as link (link.page)}
+                    <a
+                        href={"/src/lib/pages/" + link.hash}
+                        on:click|preventDefault={() => {page.set(link.page); shouldAnimate = false;}}
+                    >├── {link.page}</a>
+                {/each}
             {/if}
         </div>
     </div>
@@ -54,7 +55,6 @@
     @use "src/lib/styles/container.scss" as *;
 
     #home {
-        @extend %container;
         z-index: 1;
         background: {
             image: linear-gradient(to top right, #83123d, #cb4015);
@@ -63,14 +63,13 @@
     }
 
     .terminal {
-        @extend %container;
         position: relative;
         width: 90%;
         height: 80%;
         place-content: start;
         flex-wrap: wrap;
 
-        p, button {
+        p, a {
             position: relative;
             font: {
                 family: "Ubuntu Mono";
@@ -80,7 +79,6 @@
     }
 
     .header {
-        @extend %container;
         position: relative;
         width: 100%;
         height: 10%;
@@ -98,14 +96,14 @@
     }
 
     .body {
-        @extend %container;
         position: relative;
         flex-direction: column;
         width: 100%;
         height: 90%;
         place-content: start;
         align-items: start;
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
         background-color: #2f0922;
 
         pre {
@@ -122,14 +120,14 @@
             text-align: left;
             top: 0.3rem;
             left: 0.1rem;
-            overflow: hidden;
+            text-decoration: none;
             cursor: pointer;
-            border: none;
-            outline: none;
-            background-color: transparent;
             font-size: 1.1rem;
             color: #b2c1e6;
-            text-decoration: none;
         }
+    }
+
+    section, div {
+        @extend %container;
     }
 </style>
