@@ -3,9 +3,14 @@
     import About from "$lib/pages/About.svelte";
 	import Certifications from "$lib/pages/Certifications.svelte";
 
+    import { _root } from "$lib/stores/root";
     import { page } from "$lib/stores/page";
 
     let shouldAnimate = true;
+
+    function setRoot(node: HTMLElement) {
+        _root.set(node);
+    }
 </script>
 
 <svelte:head>
@@ -18,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<main>
+<main use:setRoot>
     {#if $page == "home"}
         <Home bind:shouldAnimate />
     {:else if $page == "about"}
@@ -30,11 +35,10 @@
 
 <style lang="scss">
     main {
-        position: fixed;
+        position: absolute;
         margin: 0;
         padding: 0;
         inset: 0;
-        width: 100%;
-        height: 100vh;
+        overflow: auto;
     }
 </style>

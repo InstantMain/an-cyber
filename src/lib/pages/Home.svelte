@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { quadOut } from 'svelte/easing';
+    import { quadOut } from "svelte/easing";
     import { slide } from 'svelte/transition';
 
 	import { banners } from "$lib/assets/banners";
@@ -40,21 +40,60 @@
                 <CommandLine text="tree" animated={shouldAnimate} bind:completed={hasTypedLs}/>
             {/if}
             {#if hasTypedLs}
-                {#each links as link (link.page)}
-                    <a
-                        href={"/src/lib/pages/" + link.hash}
-                        on:click|preventDefault={() => {page.set(link.page); shouldAnimate = false;}}
-                    >├── {link.page}</a>
-                {/each}
+                <div class="tree-lines">
+                    {#each links as link (link.page)}
+                        <div class="tree-line">
+                            <span>├──</span>
+                            <a
+                                href={"/src/lib/pages/" + link.hash}
+                                on:click|preventDefault={() => {page.set(link.page); shouldAnimate = false;}}
+                            >{link.page}</a>
+                        </div>
+                    {/each}
+                </div>
             {/if}
         </div>
+    </div>
+
+    <div class="ripples">
+        {#each {length: 3} as _}
+            <div class="ripple" />
+        {/each}
+    </div>
+
+    <div class="bubbles">
+        {#each {length:5} as _}
+            <div class="bubble" />
+        {/each}
     </div>
 </section>
 
 <style lang="scss">
+    @use "sass:math";
     @use "src/lib/styles/container.scss" as *;
 
+    @mixin rise($index, $half, $full) {
+        @keyframes #{"rise-" + $index} {
+            0% {
+                bottom: 0%;
+                margin-bottom: -25%;
+                transform: translate(0%);
+            }
+            50% {
+                transform: translate($half);
+            }
+
+            100% {
+                bottom: 100%;
+                margin-bottom: 100%;
+                transform: translate($full);
+            }
+        }
+    }
+
     #home {
+        position: absolute;
+        margin: 0;
         z-index: 1;
         background: {
             image: linear-gradient(to top right, #83123d, #cb4015);
@@ -63,10 +102,9 @@
     }
 
     .terminal {
-        position: relative;
         width: 90%;
         height: 80%;
-        place-content: start;
+        justify-content: start;
         flex-wrap: wrap;
 
         p, a {
@@ -79,7 +117,6 @@
     }
 
     .header {
-        position: relative;
         width: 100%;
         height: 10%;
         z-index: 1;
@@ -96,11 +133,11 @@
     }
 
     .body {
-        position: relative;
         flex-direction: column;
         width: 100%;
         height: 90%;
-        place-content: start;
+        z-index: 1;
+        justify-content: start;
         align-items: start;
         overflow-x: hidden;
         overflow-y: auto;
@@ -115,19 +152,137 @@
                 size: 0.3rem;
             }
         }
+    }
+
+    .tree-lines {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .tree-line {
+        margin: 0;
+        justify-content: flex-start;
+        align-items: flex-start;
+        white-space: nowrap;
+        height: 1.6rem;
+
+        span {
+            text-align: left;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+        }
 
         a {
             text-align: left;
-            top: 0.3rem;
-            left: 0.1rem;
+            left: 1rem;
             text-decoration: none;
             cursor: pointer;
             font-size: 1.1rem;
             color: #b2c1e6;
+
+            &::before {
+                content: "[";
+                position: absolute;
+                left: 50%;
+                opacity: 0;
+                z-index: -1;
+                transition: 0.25s;
+            }
+            &::after {
+                content: "]";
+                position: absolute;
+                right: 50%;
+                opacity: 0;
+                z-index: -1;
+                transition: 0.25s;
+            }
+
+            &:hover::before {
+                left: -0.65rem;
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            &:hover::after {
+                right: -0.65rem;
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    }
+
+    .ripples {
+        position: absolute;
+        z-index: -1;
+
+        @for $i from 1 through 3 {
+            &:hover .ripple:nth-child(3n + #{$i}) {
+                animation-name: ripple;
+                animation-duration: 4.75s;
+                animation-timing-function: cubic-bezier(0.65, 0, 0.34, 1);
+                animation-iteration-count: infinite;
+                animation-delay: ($i - 1) * 1.25s;
+            }
+        }
+    }
+
+    .ripple {
+        position: absolute;
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		border: 3px solid rgba(0, 0, 0, 0.44);
+	}
+
+    .bubbles {
+        position: absolute;
+        z-index: -2;
+    }
+
+    .bubble {
+        position: absolute;
+        margin-bottom: -25%;
+		height: 0;
+        bottom: 0%;
+		border-radius: 50%;
+		border: 8px solid rgba(0, 0, 0, 0.2);
+        animation-iteration-count: infinite;
+        animation-timing-function: cubic-bezier(0.5, -1, 0.5, 1);
+
+        @for $i from 1 through 5 {
+            $radius: math.div(percentage(random(10) + 3), 100);
+            &:nth-child(5n + #{$i}) {
+                left: math.div(percentage(random(100) - 1), 100);
+                margin-left: math.div(percentage(random(25) - 1), -100);
+                width: $radius;
+                padding-bottom: $radius;
+                animation-duration: random(10) + 10 + s;
+                animation-delay: random(3) + 3 + s;
+                animation-name: #{"rise-" + $i};
+            }
         }
     }
 
     section, div {
         @extend %container;
+    }
+
+    @keyframes ripple {
+		from {
+			opacity: 1;
+			width: 0%;
+			padding-bottom: 0%;
+		}
+
+		to {
+			opacity: 0;
+			width: 100%;
+			padding-bottom: 100%;
+		}
+	}
+
+    @for $i from 1 through 5 {
+        @include rise($i, math.div(percentage(random(200) - 100), 100), math.div(percentage(random(200) - 100), 100));
     }
 </style>

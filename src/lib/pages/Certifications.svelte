@@ -1,11 +1,15 @@
 <script lang="ts">
-    import { fade } from 'svelte/transition';
+	import { get } from "svelte/store";
+    import { fade } from "svelte/transition";
 
+	import { root } from "$lib/stores/root";
     import { page } from "$lib/stores/page";
+
+	let parent = get(root);
  </script>
 
 <section id="certifications" transition:fade={{ duration: 250 }}>
-
+	<p>test</p>
 </section>
 
 <aside class="sidebar">
@@ -16,7 +20,7 @@
 	<div class="square">
 		<a
 			href="./Home.svelte#home"
-			on:click|preventDefault={() => {document.documentElement.scrollTop = 0;; page.set("home")}}
+			on:click|preventDefault={() => {parent.scrollTo(0, 0); page.set("home")}}
 		>
 			<div class="round-square">
 				<div class="arrow" />
@@ -29,7 +33,7 @@
     @use "src/lib/styles/container.scss" as *;
 
     #certifications {
-        overflow: 200vh;
+        height: 200vh;
         background-color: #7c7c7c;
     }
 

@@ -1,11 +1,21 @@
 <script lang="ts">
-    import { fade } from 'svelte/transition';
+	import { get } from "svelte/store";
+    import { fade } from "svelte/transition";
 
+	import { root } from "$lib/stores/root";
     import { page } from "$lib/stores/page";
+
+	let parent = get(root);
  </script>
 
 <section id="about" transition:fade={{ duration: 250 }}>
+	<section>
+		<p>test</p>
+	</section>
 
+	<section>
+		<p>asdf</p>
+	</section>
 </section>
 
 <aside class="sidebar">
@@ -16,7 +26,7 @@
 	<div class="square">
 		<a
 			href="./Home.svelte#home"
-			on:click|preventDefault={() => {document.documentElement.scrollTop = 0;; page.set("home")}}
+			on:click|preventDefault={() => {parent.scrollTo(0, 0); page.set("home")}}
 		>
 			<div class="round-square">
 				<div class="arrow" />
@@ -29,8 +39,18 @@
     @use "src/lib/styles/container.scss" as *;
 
     #about {
-        overflow: 200vh;
+		flex-direction: column;
+        height: 200vh;
         background-color: #7c7c7c;
+
+		section {
+			&:nth-child(1) {
+				background-color: red;
+			}
+			&:nth-child(2) {
+				background-color: blue;
+			}
+		}
     }
 
     .sidebar {
@@ -46,9 +66,6 @@
     }
 
     .title {
-		position: relative;
-		height: 100%;
-
         p {
             transform: rotate(-90deg);
             font-family: "Ubuntu";
@@ -58,7 +75,6 @@
 	}
 
     .triangle {
-		position: relative;
 		width: calc(100% - 7vw);
 		height: 0;
 		border-right: 7vw solid transparent;
@@ -66,13 +82,10 @@
 	}
 
 	.square {
-		position: relative;
-		height: 100%;
 		background-color: #8d4061;
 	}
 
     .round-square {
-		position: relative;
 		margin-top: 50%;
 		width: 80%;
 		height: 0;
@@ -87,7 +100,7 @@
 	}
 
     .arrow {
-        position: absolute;
+		position: absolute;
 		width: 0;
 		height: 0;
 		padding: 15%;
