@@ -27,7 +27,7 @@
 <section id="home" transition:slide={{ duration: 250, easing: quadOut, axis: "x" }}>
     <div class="terminal">
         <div class="header">
-            <p>root@an-cyber.pages.dev: ~</p>
+            <h1>root@an-cyber.pages.dev: ~</h1>
         </div>
         <div class="body">
             {#if isMounted}
@@ -75,8 +75,8 @@
     @mixin rise($index, $half, $full) {
         @keyframes #{"rise-" + $index} {
             0% {
-                bottom: 0%;
                 margin-bottom: -25%;
+                bottom: 0%;
                 transform: translate(0%);
             }
             50% {
@@ -84,8 +84,8 @@
             }
 
             100% {
-                bottom: 100%;
                 margin-bottom: 100%;
+                bottom: 100%;
                 transform: translate($full);
             }
         }
@@ -106,14 +106,6 @@
         height: 80%;
         justify-content: start;
         flex-wrap: wrap;
-
-        p, a {
-            position: relative;
-            font: {
-                family: "Ubuntu Mono";
-                weight: 700;
-            }
-        }
     }
 
     .header {
@@ -123,7 +115,7 @@
         border-radius: 10px 10px 0px 0px;
         background-color: #4b4841;
 
-        p {
+        h1 {
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -261,6 +253,14 @@
                 animation-delay: random(3) + 3 + s;
                 animation-name: #{"rise-" + $i};
             }
+        }
+    }
+
+    h1, span, a {
+        position: relative;
+        font: {
+            family: "Ubuntu Mono";
+            weight: 700;
         }
     }
 

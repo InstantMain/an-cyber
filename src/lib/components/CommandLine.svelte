@@ -14,7 +14,7 @@
             return;
         }
 
-		const text = node.textContent ? node.textContent : "";
+		const text = node.textContent as string;
 
         setTimeout(() => (hasStarted = true), delay);
 
