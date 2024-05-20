@@ -11,7 +11,7 @@
 
     const links = [
         { page: "about", hash: "About.svelte#about" },
-        { page: "certifications", hash: "Certifications.svelte#certifications" }
+        //{ page: "certifications", hash: "Certifications.svelte#certifications" }
     ]
 
     let isMounted = false;
@@ -56,13 +56,13 @@
     </div>
 
     <div class="ripples">
-        {#each {length: 3} as _}
+        {#each { length: 3 } as _}
             <div class="ripple" />
         {/each}
     </div>
 
     <div class="bubbles">
-        {#each {length:5} as _}
+        {#each { length: 5 } as _}
             <div class="bubble" />
         {/each}
     </div>
