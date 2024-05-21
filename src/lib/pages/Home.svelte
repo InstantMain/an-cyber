@@ -5,6 +5,7 @@
 
 	import { banners } from "$lib/assets/banners";
     import { page } from "$lib/stores/page";
+
     import CommandLine from "$lib/components/CommandLine.svelte";
 
     export let shouldAnimate = true;
