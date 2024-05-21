@@ -11,7 +11,6 @@
 
     const links = [
         { page: "about", hash: "About.svelte#about" },
-        //{ page: "certifications", hash: "Certifications.svelte#certifications" }
     ]
 
     let isMounted = false;
@@ -35,23 +34,32 @@
             {/if}
             {#if hasTypedWhoAmI}
                 {#each banners as banner}
-                    <pre>{banner}</pre>
+                    <pre class="banner">{banner}</pre>
                 {/each}
                 <CommandLine text="tree" animated={shouldAnimate} bind:completed={hasTypedLs}/>
             {/if}
             {#if hasTypedLs}
-                <div class="tree-lines">
-                    {#each links as link (link.page)}
-                        <div class="tree-line">
+                {#each links as link (link.page)}
+                    <ul>
+                        <li>
                             <span>├──</span>
                             <a
                                 href={"/src/lib/pages/" + link.hash}
                                 on:click|preventDefault={() => {page.set(link.page); shouldAnimate = false;}}
                             >{link.page}</a>
-                        </div>
-                    {/each}
-                </div>
+                        </li>
+                    </ul>
+                {/each}
             {/if}
+            <pre class="cow">
+                ___________________
+               &lt Cyber Innovations >
+                -------------------
+                       \   ^__^
+                        \  (oo)\_______
+                           (__)\       )\/\
+                               ||----w |
+                               ||     ||</pre>
         </div>
     </div>
 
@@ -109,7 +117,6 @@
     }
 
     .header {
-        width: 100%;
         height: 10%;
         z-index: 1;
         border-radius: 10px 10px 0px 0px;
@@ -126,7 +133,6 @@
 
     .body {
         flex-direction: column;
-        width: 100%;
         height: 90%;
         z-index: 1;
         justify-content: start;
@@ -134,74 +140,19 @@
         overflow-x: hidden;
         overflow-y: auto;
         background-color: #2f0922;
-
-        pre {
-            margin: 0.3rem 0.7rem;
-            text-overflow: nowrap;
-            color: #FFFFFF;
-            font: {
-                weight: 400;
-                size: 0.3rem;
-            }
-        }
     }
 
-    .tree-lines {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
+    .banner {
+        margin: 0.3rem 0.7rem;
+        color: #FFFFFF;
+        font-size: 0.3rem;
     }
 
-    .tree-line {
-        margin: 0;
-        justify-content: flex-start;
-        align-items: flex-start;
-        white-space: nowrap;
-        height: 1.6rem;
-
-        span {
-            text-align: left;
-            font-size: 1.1rem;
-            color: #FFFFFF;
-        }
-
-        a {
-            text-align: left;
-            left: 1rem;
-            text-decoration: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            color: #b2c1e6;
-
-            &::before {
-                content: "[";
-                position: absolute;
-                left: 50%;
-                opacity: 0;
-                z-index: -1;
-                transition: 0.25s;
-            }
-            &::after {
-                content: "]";
-                position: absolute;
-                right: 50%;
-                opacity: 0;
-                z-index: -1;
-                transition: 0.25s;
-            }
-
-            &:hover::before {
-                left: -0.65rem;
-                opacity: 1;
-                transform: scale(1.2);
-            }
-
-            &:hover::after {
-                right: -0.65rem;
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
+    .cow {
+        position: absolute;
+        right: 0.3rem;
+        bottom: 0.7rem;
+        font-size: 1rem;
     }
 
     .ripples {
@@ -256,7 +207,64 @@
         }
     }
 
-    h1, span, a {
+    ul {
+        margin: 0.3rem 0;
+        padding: 0;
+        padding-left: 0.1rem;
+    }
+
+    li {
+        list-style-type: none;
+
+        span {
+            font-size: 1.1rem;
+            color: #FFFFFF;
+        }
+
+        a {
+            left: 1ch;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #b2c1e6;
+
+            &::before {
+                content: "[";
+                position: absolute;
+                left: 50%;
+                opacity: 0;
+                z-index: -1;
+                transition: 0.25s;
+            }
+            &::after {
+                content: "]";
+                position: absolute;
+                right: 50%;
+                opacity: 0;
+                z-index: -1;
+                transition: 0.25s;
+            }
+
+            &:hover::before {
+                left: -0.65rem;
+                opacity: 1;
+                transform: scale(1.2);
+            }
+
+            &:hover::after {
+                right: -0.65rem;
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    }
+
+    pre {
+        margin: 0;
+        color: #FFFFFF;
+    }
+
+    h1, span, a, li {
         position: relative;
         font: {
             family: "Ubuntu Mono";
