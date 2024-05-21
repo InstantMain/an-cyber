@@ -150,10 +150,9 @@
     }
 
     .cow {
-        position: absolute;
-        right: 0.3rem;
-        bottom: 0.7rem;
-        font-size: 1rem;
+        margin-left: auto;
+        margin-top: auto;
+        font-size: 0.8rem;
     }
 
     .ripples {
