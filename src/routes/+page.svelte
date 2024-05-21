@@ -1,7 +1,6 @@
 <script lang="ts">
     import Home from "$lib/pages/Home.svelte";
     import About from "$lib/pages/About.svelte";
-	import Certifications from "$lib/pages/Certifications.svelte";
 
     import { page } from "$lib/stores/page";
 
@@ -23,8 +22,6 @@
         <Home bind:shouldAnimate />
     {:else if $page == "about"}
         <About />
-    {:else if $page == "certifications"}
-        <Certifications />
     {/if}
 </main>
 

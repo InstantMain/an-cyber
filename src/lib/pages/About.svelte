@@ -6,9 +6,7 @@
 	import lock from "$lib/assets/about-lock.webp";
 	import portrait from "$lib/assets/portrait.png";
 	import magnolia from "$lib/assets/magnolia-logo.png";
-	import magtest from "$lib/assets/magnolia-test.png";
 	import cypress from "$lib/assets/cypress-logo.png";
-	import cytest from "$lib/assets/cypress-test.png";
 
 	const headerTopString = "About";
 	const headerBottomString = "Alexander Nguyen";
@@ -24,22 +22,6 @@
 		for (const [index, section] of sections.entries()) {
 			section.style["z-index"] = sections.length - index - 1;
 		}
-	}
-
-	function onHoverImage(event: MouseEvent) {
-		const node = event.currentTarget as HTMLDivElement;
-		const circle = node.previousElementSibling as HTMLImageElement;
-		const rect = node.getBoundingClientRect();
-		circle.style["z-index"] = 2;
-		const circleHalf = circle.offsetWidth/2;
-		const x = event.pageX - node.offsetLeft;
-		const y = event.pageY - node.offsetTop;
-		console.log(x, y);
-		console.log(x - circleHalf, y - circleHalf);
-		console.log(event.clientX - rect.left, event.clientY - rect.top);
-		console.log(event.clientX - rect.left + (node.offsetLeft + rect.width / 2), node.offsetTop + rect.height / 2);
-		circle.style.left = `${event.clientX}px`;
-		circle.style.top = `${event.clientX}px`;
 	}
 
 	function onScroll(event: Event) {
@@ -152,9 +134,15 @@
 
 		<div class="sections" bind:this={sectionContainer} use:setSections >
 			<section class="bio">
-				<div class="dark">
+				<div class="dark text">
 					<h2>About Me</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<p>
+						I am a student in the cybersecurity pathway at Magnolia High School. 
+						I possess high creativity and critical thinking skills. 
+						I plan to enter the cybersecurity field and become a cybersecurity analyst, penetration tester, or application security engineer. 
+						I currently own 6 certificates from platforms like Coursera, CompTIA, SANS, and Cisco. 
+						My hobbies include piano, coding, and video game development.
+					</p>
 				</div>
 				<div class="light">
 					<img src={portrait} alt="Portrait of Alexander Nguyen">
@@ -162,54 +150,59 @@
 			</section>
 			<section class="education">
 				<div class="light">
-					<div class="image-out">
-						<img src={magtest} alt="Magnolia Logo">
-						<img src={magnolia} alt="Magnolia Logo">
-					</div>
-					<div class="image-out">
-						<img src={cytest} alt="Cypress Logo">
-						<img src={cypress} alt="Cypress Logo">
-					</div>
+					<img src={magnolia} alt="Magnolia Logo">
+					<img src={cypress} alt="Cypress Logo">
 				</div>
-				<div class="dark">
+				<div class="dark text">
 					<h2>Education</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<p>Magnolia High School</p>
+					<ul style:margin-bottom="3ch">
+						<li>‣ Exclusive Cybersecurity Pathway (CS3/MCI)</li>
+						<li>‣ Cyber Literacy 1 & 2</li>
+						<li>‣ Cyber Innovations</li>
+					</ul>
+					<p>Cypress College (Dual Enrollment)</p>
+					<ul style:margin-bottom=0>
+						<li>‣ CIS 150 C - Microsoft Office Applications</li>
+						<li>‣ CIS 230 C - Cisco Networking 1</li>
+						<li>‣ CIS 195 C - Network Security</li>
+						<li>‣ CIS 196 C - Ethical Hacking</li>
+						<li>‣ CIS 247 C - Python Programming</li>
+					</ul>
 				</div>
 			</section>
 			<section class="skills">
-				<div class="dark">
+				<div class="dark text">
 					<h2>Technical Skills</h2>
-					<div class="list">
-						<ul>
-							<li>Linux (Ubuntu)</li>
-							<li>Programming
-								<ul>
-									<li>Python</li>
-									<li>Lua</li>
-									<li>TypeScript</li>
-									<li>SQL</li>
-									<li>HTML/CSS</li>
-								</ul>
-							</li>
-							<li>Microsoft Office
-								<ul>
-									<li>Word</li>
-									<li>Excel</li>
-									<li>PowerPoint</li>
-								</ul>
-							</li>
-							<li>100+ WPM Typing Speed</li>
-						</ul>
-					</div>
+					<ul>
+						<li>‣ Linux (Ubuntu)</li>
+						<li>‣ Programming
+							<ul>
+								<li>▹ Python</li>
+								<li>▹ Lua</li>
+								<li>▹ TypeScript</li>
+								<li>▹ SQL</li>
+								<li>▹ HTML/CSS</li>
+							</ul>
+						</li>
+						<li>‣ Microsoft Office
+							<ul>
+								<li>▹ Word</li>
+								<li>▹ Excel</li>
+								<li>▹ PowerPoint</li>
+							</ul>
+						</li>
+						<li>‣ 100+ WPM Typing Speed</li>
+					</ul>
 				</div>
-				<div class="light">
+				<div class="light text">
 					<h2>Soft Skills</h2>
 					<ul>
-						<li>Critical thinking</li>
-						<li>Planning skills</li>
-						<li>Problem solving</li>
-						<li>Collaboration</li>
-						<li>Organization</li>
+						<li>‣ Critical thinking</li>
+						<li>‣ Planning skills</li>
+						<li>‣ Problem solving</li>
+						<li>‣ Collaboration</li>
+						<li>‣ Organization</li>
 					</ul>
 				</div>
 			</section>
@@ -293,29 +286,23 @@
 		z-index: 1;
 
 		h2 {
-			position: absolute;
-			margin-bottom: 27rem;
 			font-size: 2.7rem;
 		}
 
-		p, li {
-			margin-left: 1.4rem;
-			width: 60ch;
-			font-size: 1.4rem;
-		}
-
-		li {
-		}
-
-		ul {
-			display: inline-block;
-			position: relative;
+		p {
+			width: 95%;
+			margin: 0;
 			text-align: left;
+			font-size: 1.4rem;
 		}
 	}
 
 	.bio, .education, .skills {
 		position: absolute;
+	}
+
+	.text {
+		flex-direction: column;
 	}
 
 	.dark {
@@ -325,59 +312,20 @@
 		h2, p, li {
 			color: #f9f9f9;
 		}
-
-		li::marker {
-			color: #f9f9f9;
-		}
 	}
 
 	.light {
 		background-color: #f9f9f9;
 		justify-content: space-around;
 
-		h2, p, li {
+		h2, li {
 			color: #121212;
 		}
 
 		img {
-			width: 50%;
+			width: 40%;
 			border-radius: 8px;
 		}
-	}
-
-	.image-out {
-		flex: 1 1 0;
-		img {
-			position: absolute;
-			width: 80%;
-			margin: auto;
-			inset: 0;
-
-			&:nth-child(1) {
-				border-radius: 50%;
-			}
-		}
-	}
-
-	.test-out {
-		flex: 1 1 0;
-		border-radius: 8px;
-
-		div {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 50%;
-			height: 0;
-			padding-bottom: 50%;
-			background: center center no-repeat fixed;
-			background-size: cover;
-			border-radius: 50%;
-		}
-	}
-
-	.list {
-		text-align: center;
 	}
 
     .sidebar {
@@ -439,7 +387,23 @@
 		transition: 0.25s;
     }
 
-	p, h1, h2 {
+	ul {
+		padding: 0;
+		margin: 0;
+		margin-bottom: auto;
+		text-align: left;
+
+		ul {
+			text-indent: 4ch;
+		}
+	}
+
+	li {
+		list-style-type: none;
+		font-size: 1.4rem;
+	}
+
+	p, h1, h2, li {
 		font-family: "Ubuntu";
 	}
 
