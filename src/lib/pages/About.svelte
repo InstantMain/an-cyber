@@ -9,6 +9,7 @@
 	import cypress from "$lib/assets/cypress-logo.png";
 
 	import Sidebar from "$lib/components/Sidebar.svelte";
+	import type { HTMLDialogAttributes } from "svelte/elements";
 
 	const headerTopString = "About";
 	const headerBottomString = "Alexander Nguyen";
@@ -17,6 +18,7 @@
 	let introText: HTMLHeadingElement;
 	let fadedBar: HTMLDivElement;
 	let sectionContainer: HTMLDivElement;
+	let cursor: HTMLDivElement;
 	const gaps: HTMLDivElement[] = [];
 
 	function setSections(node: HTMLDivElement) {
@@ -24,6 +26,11 @@
 		for (const [index, section] of sections.entries()) {
 			section.style["z-index"] = sections.length - index - 1;
 		}
+	}
+
+	function onMouseMove(event: MouseEvent) {
+		cursor.style.left = `${event.clientX}px`;
+		cursor.style.top = `${event.clientY}px`;
 	}
 
 	function onScroll(event: Event) {
@@ -125,7 +132,7 @@
 </script>
 
 <section id="about" transition:fade={{ duration: 250 }}>
-	<div class="content" on:scroll={onScroll}>
+	<div class="content" on:scroll={onScroll} on:mousemove={onMouseMove}>
 		<div class="background" bind:this={headerBackground}>
 			<h1 bind:this={introText}>{headerTopString}</h1>
 			<div bind:this={fadedBar} />
@@ -212,6 +219,8 @@
 
 		<div class="gap" bind:this={gaps[1]} />
 		<div class="gap" bind:this={gaps[2]} />
+
+		<div class="cursor" bind:this={cursor} />
 	</div>
 </section>
 
@@ -231,6 +240,11 @@
 		width: 96%;
 		height: 98%;
 		overflow-y: auto;
+		cursor: none;
+	}
+
+	.content:hover .cursor {
+		opacity: 1;
 	}
 
 	.background {
@@ -313,6 +327,21 @@
 			width: 40%;
 			border-radius: 8px;
 		}
+	}
+
+	.cursor {
+		position: fixed;
+		margin: 0;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		z-index: 999;
+		opacity: 0;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
+		mix-blend-mode: difference;
+		background-color: #FFFFFF;
+		transition: opacity 0.25s;
 	}
 
 	ul {
